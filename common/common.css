@@ -1,0 +1,44 @@
+/* 本项目公共样式 */
+.bg-main{
+	background-color: #ED4040!important;
+}
+.bg-main-disabled{
+	background-color: #F87F97!important;
+}
+.text-main0{
+	color: #ED4040;
+}
+.text-main1{
+	color: #ffcc00;
+}
+.text-main2{
+	color: #74b886;
+}
+.text-main3{
+	color: #395ac6;
+}
+.text-main4{
+	color: #ffbdbd;
+}
+.text-main5{
+	color: #424242;
+}
+
+/* 主题颜色 */
+/* 日间 */
+.sl-main-bg{
+	background-color: #F5F7F9;
+}
+/* 列表颜色 */
+.sl-list{
+	background-color: #ffffff;
+}
+
+/* 夜间 */
+.sd-main-bg{
+	background-color: rgba(0,0,0,0.3);
+}
+/* 列表颜色 */
+.sd-list{
+	background-color: rgba(0,0,0,0.2);
+}

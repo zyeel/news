@@ -1,0 +1,263 @@
+
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"app-plus":{
+					//导航栏
+					"titleNView":{
+						"searchInput":{
+							"align":"center",
+							"backgroundColor":"#F5F4F2",
+							"borderRadius":"15px",
+							"disabled":true,
+							"placeholder":"新闻搜索",
+							"placeholderColor":"#6d6c67"
+						},
+						"buttons":[
+							{
+								"color":"#ffffff",
+								"colorPressed":"#ffffff",
+								"float":"right",
+								"fontSize":"16px",
+								"fontSrc":"/static/iconfont2.ttf",
+								"text":"\ue621"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/hot/hot",
+			"style": {
+				
+			}
+		},
+		{
+			"path": "pages/mine/mine",
+			"style": {
+				"app-plus":{
+					//导航栏
+					"titleNView":{
+						"backgroundColor":"#f5f7f9",
+						"titleText":"我的",
+						"buttons":[
+							{
+								"color":"#000000",
+								"colorPressed":"#6d6c67",
+								"float":"right",
+								"fontSize":"16px",
+								"fontSrc":"/static/iconfont2.ttf",
+								"text":"\ue625"
+							},
+							{
+								"color":"#000000",
+								"colorPressed":"#6d6c67",
+								"float":"left",
+								"fontSize":"16px",
+								"fontSrc":"/static/iconfont2.ttf",
+								"text":"\ue601"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+		    "path" : "pages/search/search",
+		    "style" : {
+				"navigationBarBackgroundColor":"#ffffff",
+				"app-plus":{
+					//导航栏
+					"titleNView":{
+						"searchInput":{
+							"align":"left",
+							"backgroundColor":"#F5F4F2",
+							"borderRadius":"15px",
+							"disabled":false,
+							"placeholder":"新闻搜索",
+							"placeholderColor":"#6d6c67"
+						},
+						"buttons":[
+							{
+								"color":"#333333",
+								"colorPressed":"#333333",
+								"float":"right",
+								"fontSize":"14px",
+								"fontSrc":"/static/iconfont.ttf",
+								"text":"搜索"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/info/info",
+			"navigationBarTitleText":"",
+			"style": {
+				"app-plus":{
+					"softinputMode": "adjustResize",
+					"titleNView":{
+						"backgroundColor":"#DD524D",
+						"titleColor":"#FFFFFF",
+						"titleText":"NEWS",
+						"titleSize":"20px",
+							"buttons":[
+								{
+									"text": "\ue74f",
+									"fontSrc": "/static/iconfont.ttf",
+									"fontSize": "30px",
+									"float": "right"
+								}
+							]
+					},
+					"subNVues":[{
+						"id": "share_page",
+						"path":"pages/info/subNVue/share",
+						"type":"popup",
+						"style":{
+							//"position":"absolute",
+							"bottom":"0",
+							"width":"750rpx",
+							"height":"250rpx"
+						}
+					}]
+				}	
+			}
+		}
+        ,{
+            "path" : "pages/comment/comment",
+            "style" : {
+				"app-plus":{
+					"softinputMode": "adjustResize",
+					"titleNView":{
+						"backgroundColor":"#DD524D",
+						"titleColor":"#FFFFFF",
+						"titleText":"COMMENTS",
+						"titleSize":"20px"
+					},
+					"subNVues":[{
+						"id": "detail_page",
+						"path":"pages/comment/subNVue/detail",
+						"type":"popup",
+						"style":{
+							//"position":"static",
+							"bottom":"0",
+							"width":"750rpx",
+							"height":"96%"
+						}
+					}]
+				}
+			}
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/login/register",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/login/forget",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/config/config",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/update/update",
+            "style" : {
+				"app-plus":{
+					//导航栏
+					"titleNView":{
+						"backgroundColor":"#f5f7f9",
+						"titleText":"修改资料",
+						"buttons":[
+							{
+								"color":"#000000",
+								"colorPressed":"#6d6c67",
+								"float":"left",
+								"fontSize":"16px",
+								"fontSrc":"/static/iconfont2.ttf",
+								"text":"\ue602"
+							}
+						]
+					}
+				}
+			}
+        }
+		,{
+		    "path" : "pages/myComment/myComment",
+		    "style" : {
+				"titleNView":{
+					"backgroundColor":"#f5f7f9",
+					"titleText":"我的评论"
+				}
+			}
+		},
+		{
+		    "path" : "pages/myCollect/myCollect",
+		    "style" : {
+				"enablePullDownRefresh": true,
+				"titleNView":{
+					"backgroundColor":"#f5f7f9",
+					"titleText":"我的收藏"
+				}
+			}
+		},
+		{
+		    "path" : "pages/myDigg/myDigg",
+		    "style" : {
+				"enablePullDownRefresh": true,
+				"titleNView":{
+					"backgroundColor":"#f5f7f9",
+					"titleText":"我的点赞"
+				}
+			}
+		},
+		{
+			"path": "pages/report/report",
+			"navigationBarTitleText":"",
+			"style": {
+				"app-plus":{
+					"softinputMode": "adjustResize",
+					"titleNView":{
+						"backgroundColor":"#DD524D",
+						"titleColor":"#FFFFFF",
+						"titleText":"使用报告",
+						"titleSize":"20px"
+					}
+				}
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "今日头条",
+		"navigationBarBackgroundColor": "#ED4040",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color":"#333333",
+		"selectedColor":"#ED4040",
+		"backgroundColor":"#F5F3F4",
+		"borderStyle":"black",
+		"list": [{
+			"pagePath":"pages/index/index",
+			"text":"首页",
+			"iconPath":"static/tabBar/home.png",
+			"selectedIconPath":"static/tabBar/homeed0.png"
+		},
+		{
+			"pagePath":"pages/mine/mine",
+			"text":"我的",
+			"iconPath":"static/tabBar/mine.png",
+			"selectedIconPath":"static/tabBar/mineed0.png"
+		}]
+	}
+}
