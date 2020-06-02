@@ -70,7 +70,6 @@
 					contentrefresh: "正在加载...",
 					contentnomore: "已显示全部评论"
 				},
-				click_index:-1, //被点击的回复的索引
 				comment_content: '', //文本框内容
 				user:{},
 				//夜间模式
@@ -119,10 +118,6 @@
 					}
 				}  
 			})
-			var that = this;
-			uni.$on('update_reply_count',function(data){
-				that.comments[that.click_index].reply_count = data.reply_count;
-			})
 			//加载skinMode的值
 			try {
 			    const value = uni.getStorageSync('skin_mode');
@@ -141,9 +136,6 @@
 			} catch (e) {
 			    // error
 			}
-		},
-		onUnload() {  
-			uni.$off('update_reply_count');
 		},
 		onShow() {
 			//获取用户信息
@@ -246,13 +238,9 @@
 				}
 			},
 			comment_detail:function(item,index){
-				this.click_index=index;
-				uni.$emit('comment_detail', {
-					comment : item,
-					news_id : this.news_id
-				});
-				const subNVue = uni.getSubNVueById("detail_page");
-				subNVue.show('slide-in-bottom', 200);
+				uni.navigateTo({
+					url: '../comment/detail?news_id='+this.news_id+'&comment='+encodeURIComponent(JSON.stringify(item))
+				})
 			},
 			digg_comment: function(item) {
 				if(this.isLogined==false){

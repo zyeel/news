@@ -138,21 +138,24 @@
 						"titleColor":"#FFFFFF",
 						"titleText":"COMMENTS",
 						"titleSize":"20px"
-					},
-					"subNVues":[{
-						"id": "detail_page",
-						"path":"pages/comment/subNVue/detail",
-						"type":"popup",
-						"style":{
-							//"position":"static",
-							"bottom":"0",
-							"width":"750rpx",
-							"height":"96%"
-						}
-					}]
+					}
 				}
 			}
         }
+		,{
+		    "path" : "pages/comment/detail",
+		    "style" : {
+				"app-plus":{
+					"softinputMode": "adjustResize",
+					"titleNView":{
+						"backgroundColor":"#DD524D",
+						"titleColor":"#FFFFFF",
+						"titleText":"REPLY",
+						"titleSize":"20px"
+					}
+				}
+			}
+		}
         ,{
             "path" : "pages/login/login",
             "style" : {}
@@ -176,17 +179,7 @@
 					//导航栏
 					"titleNView":{
 						"backgroundColor":"#f5f7f9",
-						"titleText":"修改资料",
-						"buttons":[
-							{
-								"color":"#000000",
-								"colorPressed":"#6d6c67",
-								"float":"left",
-								"fontSize":"16px",
-								"fontSrc":"/static/iconfont2.ttf",
-								"text":"\ue602"
-							}
-						]
+						"titleText":"修改资料"
 					}
 				}
 			}
