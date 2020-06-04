@@ -3312,11 +3312,7 @@ var render = function() {
       ),
       _c(
         "v-uni-view",
-        {
-          staticClass: _vm._$g(6, "sc"),
-          class: _vm._$g(6, "c"),
-          attrs: { _i: 6 }
-        },
+        { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
         [
           _vm._$g(7, "i")
             ? _c("v-uni-video", {
@@ -3328,7 +3324,7 @@ var render = function() {
                 }
               })
             : _vm._e(),
-          _c("u-prase", { attrs: { _i: 8 } })
+          _c("u-prase", { class: _vm._$g(8, "c"), attrs: { _i: 8 } })
         ],
         1
       ),
