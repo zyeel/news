@@ -135,6 +135,8 @@
 					}
 					this.con = res.data.data.content.replace(/<[a-zA-Z][^>]*>/gi, '').replace(/[</][a-zA-Z][^>]*>/gi, '').replace(
 						/</gi, '');
+					this.con = this.con.replace(/\\[a-zA-Z]/gi, '');
+					this.con = this.con.replace(/[\n]+/gi, '');
 					this.con = this.con.substr(0, 50);
 					//this.comment_count = res.data.data.comment_count;
 					uni.setNavigationBarTitle({
