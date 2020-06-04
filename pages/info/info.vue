@@ -7,7 +7,9 @@
 			<view class="time">{{time | tsToTime}}</view>
 		</view>
 		<view class="content" :class="fontSizeContent">
-			<rich-text :nodes="news_content"></rich-text>
+			<video class="video_s" v-if="has_video" :src="video_source" :poster="video_poster"></video>
+			<!--<rich-text :nodes="news_content"></rich-text>-->
+			<u-prase :content="news_content"></u-prase>
 		</view>
 
 		<!-- 部分评论 -->
@@ -60,8 +62,12 @@
 	import {
 		timestampToTime
 	} from '../../timeset.js';
-
+	import uPrase from "../../components/feng-parse/parse.vue"
+	
 	export default {
+		components:{
+			uPrase
+			},
 		data() {
 			return {
 				title: '',
@@ -82,7 +88,11 @@
 				//字体大小
 				fontSize: 'normal',
 				theme_color: ["#ED4040", "#ffcc00", "#74b886", "#395ac6", "#ffbdbd", "#424242"],
-				isLogined: false
+				isLogined: false,
+				video_id:'',
+				video_source: '',
+				video_poster:'',
+				has_video: false
 			}
 		},
 		onLoad(e) {
@@ -112,6 +122,17 @@
 					this.time = res.data.data.publish_time;
 					this.news_content = res.data.data.content.replace(/<img/gi, '<img style="max-width: 100%;"').replace(
 						/<html><body>/gi, '').replace(/<\/body><\/html>/gi, "").replace(/<p>/gi, '<p style="margin:16px 0">');
+					
+					if(this.news_content.search(/tt-videoid/) != -1){
+						//获取视频
+						this.has_video = true;
+						this.video_id = this.news_content.substr(this.news_content.search(/tt-videoid/)+12, 32);
+						this.video_poster = this.news_content.substr(this.news_content.search(/tt-poster/)+11, this.news_content.search(/视频加载中.../)-2-this.news_content.search(/tt-poster/)-11);
+						this.news_content = this.news_content.replace(/视频加载中.../gi, '');
+						//console.log(this.video_id);
+						//console.log(this.video_poster);
+						this.getVideo(this.video_id);
+					}
 					this.con = res.data.data.content.replace(/<[a-zA-Z][^>]*>/gi, '').replace(/[</][a-zA-Z][^>]*>/gi, '').replace(
 						/</gi, '');
 					this.con = this.con.substr(0, 50);
@@ -387,6 +408,20 @@
 			closeShare: function() {
 				console.log("111");
 			},
+			getVideo(id){
+				uni.request({
+					url:'https://af1o32.toutiao15.com/get_video',
+					method:'GET',
+					data:{
+						video_id: id
+					},
+					success: res=>{
+						//console.log(res);
+						this.video_source = res.data;
+						//console.log(this.video_source);
+					}
+				})
+			}
 		},
 		filters: {
 			tsToTime(ts) {
@@ -596,5 +631,9 @@
 
 	.change_color {
 		color: #F45858;
+	}
+	.video_s{
+		display: block;
+		margin: auto;
 	}
 </style>
