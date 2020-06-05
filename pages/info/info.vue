@@ -6,10 +6,10 @@
 			<view class="author">{{author}}</view>
 			<view class="time">{{time | tsToTime}}</view>
 		</view>
-		<view class="content" :class="fontSizeContent">
+		<view class="content">
 			<video class="video_s" v-if="has_video" :src="video_source" :poster="video_poster"></video>
 			<!--<rich-text :nodes="news_content"></rich-text>-->
-			<u-prase :content="news_content"></u-prase>
+			<u-prase :content="news_content" ></u-prase>
 		</view>
 
 		<!-- 部分评论 -->
@@ -121,7 +121,7 @@
 					//console.log(this.author);
 					this.time = res.data.data.publish_time;
 					this.news_content = res.data.data.content.replace(/<img/gi, '<img style="max-width: 100%;"').replace(
-						/<html><body>/gi, '').replace(/<\/body><\/html>/gi, "").replace(/<p>/gi, '<p style="margin:16px 0">');
+						/<html><body>/gi, '').replace(/<\/body><\/html>/gi, "").replace(/<p>/gi, '<p style="margin:16px 0;font-size:'+((this.fontSize == 'big') ? '40rpx' : ((this.fontSize == 'normal') ? '35rpx' : '30rpx'))+';">');
 					
 					if(this.news_content.search(/tt-videoid/) != -1){
 						//获取视频

@@ -30,9 +30,31 @@
 			}
 		},
 		{
-			"path": "pages/hot/hot",
+			"path": "pages/recommend/recommend",
 			"style": {
-				
+				"app-plus":{
+					//导航栏
+					"titleNView":{
+						"searchInput":{
+							"align":"center",
+							"backgroundColor":"#F5F4F2",
+							"borderRadius":"15px",
+							"disabled":true,
+							"placeholder":"新闻搜索",
+							"placeholderColor":"#6d6c67"
+						},
+						"buttons":[
+							{
+								"color":"#ffffff",
+								"colorPressed":"#ffffff",
+								"float":"right",
+								"fontSize":"16px",
+								"fontSrc":"/static/iconfont2.ttf",
+								"text":"\ue621"
+							}
+						]
+					}
+				}
 			}
 		},
 		{
@@ -243,6 +265,12 @@
 		"list": [{
 			"pagePath":"pages/index/index",
 			"text":"首页",
+			"iconPath":"static/tabBar/home.png",
+			"selectedIconPath":"static/tabBar/homeed0.png"
+		},
+		{
+			"pagePath":"pages/recommend/recommend",
+			"text":"推荐",
 			"iconPath":"static/tabBar/home.png",
 			"selectedIconPath":"static/tabBar/homeed0.png"
 		},
