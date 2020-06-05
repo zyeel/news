@@ -291,7 +291,7 @@
 							//console.log("loadmore",'https://af1o32.toutiao15.com/import_newsId?news_id='+result.data.data[j].item_id)
 							uni.request({
 									url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-										result.data.data[j].title + "&tabIndex="+this.tabBars[i].name
+										result.data.data[j].title + "&tabIndex="+this.tabBars[i].name + "&publish_time="+result.data.data[j].publish_time+"&source="+result.data.data[j].source
 								})
 								.then(data => {
 									var [error, res] = data;
@@ -324,7 +324,7 @@
 							//console.log("loadmore",'https://af1o32.toutiao15.com/import_newsId?news_id='+result.data.data[j].item_id)
 							uni.request({
 									url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-										result.data.data[j].title+ "&tabIndex="+this.tabBars[index].name
+										result.data.data[j].title+ "&tabIndex="+this.tabBars[index].name + "&publish_time="+result.data.data[j].publish_time+"&source="+result.data.data[j].source
 								})
 								.then(data => {
 									var [error, res] = data;
@@ -387,8 +387,7 @@
 							let j = 0;
 							for (; j < this.news_list[i].list.length; j = j + 1) {
 								uni.request({
-										url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-											result.data.data[j].title+ "&tabIndex="+this.tabBars[i].name
+										url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" + result.data.data[j].title+ "&tabIndex="+this.tabBars[i].name + "&publish_time="+result.data.data[j].publish_time+"&source="+result.data.data[j].source
 									})
 									.then(data => {})
 							}
