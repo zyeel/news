@@ -42,10 +42,10 @@
 		},
 		computed:{
 			fontSizeTitle() {
-				return (this.fontSize=='big')?'font-md':((this.fontSize=='normal')?'font':'font-sm')
+				return (this.fontSize=='big')?'font-lg':((this.fontSize=='normal')?'font-md':'font')
 			},
 			fontSizeDetail() {
-				return (this.fontSize=='big')?'font':((this.fontSize=='normal')?'font-sm':'font-small')
+				return (this.fontSize=='big')?'font-md':((this.fontSize=='normal')?'font':'font-sm')
 			}
 		},
 		props:{

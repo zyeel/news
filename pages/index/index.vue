@@ -50,6 +50,8 @@
 		},
 		data() {
 			return {
+				//用户id
+				userID: '',
 				//夜间模式
 				skinMode: true,
 				//字体大小
@@ -134,6 +136,36 @@
 			} catch (e) {
 				// error
 			}
+			//加载userID
+			try{
+				const value = uni.getStorageSync("user_id");
+				if(value !== ''){
+					this.userID = value;
+				}
+			}catch(e){
+				//TODO handle the exception
+			}
+			if(this.userID !== ''){
+				//更新用户最喜爱的词语表
+				uni.request({
+					url: "https://af1o32.toutiao15.com/create_preflist",
+					data:{
+						user_id: this.userID,
+					},
+					method:"POST",
+					success() {
+					}
+				})
+				//更新推荐新闻
+				uni.request({
+					url:"https://af1o32.toutiao15.com/create_recommendation",
+					data:{
+						user_id: this.userID,
+					},
+					method:"POST",
+				})
+			}
+			
 			//修改底部tab
 			if (this.skinMode) {
 				uni.setTabBarStyle({
@@ -259,7 +291,7 @@
 							//console.log("loadmore",'https://af1o32.toutiao15.com/import_newsId?news_id='+result.data.data[j].item_id)
 							uni.request({
 									url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-										result.data.data[j].title
+										result.data.data[j].title + "&tabIndex="+this.tabBars[i].name
 								})
 								.then(data => {
 									var [error, res] = data;
@@ -292,7 +324,7 @@
 							//console.log("loadmore",'https://af1o32.toutiao15.com/import_newsId?news_id='+result.data.data[j].item_id)
 							uni.request({
 									url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-										result.data.data[j].title
+										result.data.data[j].title+ "&tabIndex="+this.tabBars[index].name
 								})
 								.then(data => {
 									var [error, res] = data;
@@ -356,7 +388,7 @@
 							for (; j < this.news_list[i].list.length; j = j + 1) {
 								uni.request({
 										url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-											result.data.data[j].title
+											result.data.data[j].title+ "&tabIndex="+this.tabBars[i].name
 									})
 									.then(data => {})
 							}
