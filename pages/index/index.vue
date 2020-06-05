@@ -62,7 +62,8 @@
 				//当前选项卡
 				tabIndex: 0,
 				//顶部选项卡
-				tabBars: [{
+				tabBars: [
+					{
 					name: "热点",
 					type: "news_hot"
 				}, {
@@ -164,6 +165,7 @@
 				})
 			}
 			this.news_list = arr
+			console.log(this.news_list[0].list)
 			//保存当前的tabIndex值
 			try {
 				uni.setStorageSync('tabIndex', this.tabBars[this.tabIndex].name);
@@ -171,6 +173,7 @@
 				//TODO handle the exception
 			};
 			this.getData();
+			console.log(this.news_list[0].list)
 		},
 		onShow() {
 			console.log("index show")
