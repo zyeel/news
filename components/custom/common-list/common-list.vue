@@ -1,5 +1,5 @@
 <template>
-	<view @click="openDetail(item.item_id,item.title,item.tabIndex)">
+	<view @click="openDetail(item.item_id,item.news_id,item.title,item.tabIndex)">
 		<view class="p-2 animated fast fadeIn">
 			<!-- 标题 -->
 			<view class="my-1" style="line-height: 1.4;"
@@ -77,7 +77,8 @@
 				return Y + M + D + h + m;
 			},
 			//点击进入详情页面
-			openDetail(news_id, title,tabIndex){
+			openDetail(item_id,news_id, title,tabIndex){
+				if(item_id!=null && item_id!='undefined') news_id=item_id;
 				try {
 				    const login = uni.getStorageSync('isLogined');
 				    if (login!=='') {
