@@ -253,7 +253,7 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "今日头条",
+		"navigationBarTitleText": "明日头条",
 		"navigationBarBackgroundColor": "#ED4040",
 		"backgroundColor": "#FFFFFF"
 	},
@@ -271,8 +271,8 @@
 		{
 			"pagePath":"pages/recommend/recommend",
 			"text":"推荐",
-			"iconPath":"static/tabBar/home.png",
-			"selectedIconPath":"static/tabBar/homeed0.png"
+			"iconPath":"static/tabBar/rcmd.png",
+			"selectedIconPath":"static/tabBar/rcmded0.png"
 		},
 		{
 			"pagePath":"pages/mine/mine",
