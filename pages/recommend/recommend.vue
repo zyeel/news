@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<scroll-view scroll-y="true" :style="'height:'+scrollH+'px;'" @scrolltolower="loadmore()" @scrolltoupper="refresh()">
+		<scroll-view scroll-y="true" :style="'height:'+scrollH+'px;'+ skin" @scrolltolower="loadmore()" @scrolltoupper="refresh()" >
 			<template v-if="news_list.list.length>0">
 				<block v-for="(item2,index2) in news_list.list" :key="index2">
 					<common-list :item="item2" :index="index2" :fontSize="fontSize"></common-list>
@@ -74,14 +74,12 @@
 			if (this.skinMode) {
 				uni.setTabBarStyle({
 					color: '#333333',
-					selectedColor: '#ED4040',
 					backgroundColor: '#F5F3F4',
 					borderStyle: 'back'
 				})
 			} else {
 				uni.setTabBarStyle({
 					color: '#333333',
-					selectedColor: '#ED4040',
 					backgroundColor: 'rgba(0,0,0,0.3)',
 					borderStyle: 'back'
 				})
@@ -138,7 +136,8 @@
 				})
 				uni.setTabBarItem({
 					index: 1,
-					selectedIconPath: "static/tabBar/homeed" + theme + ".png"
+					iconPath: "static/tabBar/rcmd.png",
+					selectedIconPath: "static/tabBar/rcmded" + theme + ".png"
 				})
 				uni.setTabBarItem({
 					index: 2,

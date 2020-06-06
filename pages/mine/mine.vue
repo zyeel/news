@@ -313,6 +313,10 @@
 				})
 				uni.setTabBarItem({
 					index: 1,
+					selectedIconPath: "static/tabBar/rcmded" + this.index2 + ".png"
+				})
+				uni.setTabBarItem({
+					index: 2,
 					selectedIconPath: "static/tabBar/mineed" + this.index2 + ".png"
 				})
 				uni.setTabBarStyle({
@@ -347,6 +351,10 @@
 				})
 				uni.setTabBarItem({
 					index: 1,
+					selectedIconPath: "static/tabBar/rcmded" + this.index2 + ".png"
+				})
+				uni.setTabBarItem({
+					index: 2,
 					selectedIconPath: "static/tabBar/mineed" + this.index2 + ".png"
 				})
 				uni.setTabBarStyle({

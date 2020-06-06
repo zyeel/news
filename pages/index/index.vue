@@ -170,14 +170,12 @@
 			if (this.skinMode) {
 				uni.setTabBarStyle({
 					color: '#333333',
-					selectedColor: '#ED4040',
 					backgroundColor: '#F5F3F4',
 					borderStyle: 'back'
 				})
 			} else {
 				uni.setTabBarStyle({
 					color: '#333333',
-					selectedColor: '#ED4040',
 					backgroundColor: 'rgba(0,0,0,0.3)',
 					borderStyle: 'back'
 				})
@@ -245,6 +243,10 @@
 				})
 				uni.setTabBarItem({
 					index: 1,
+					selectedIconPath: "static/tabBar/rcmded" + theme + ".png"
+				})
+				uni.setTabBarItem({
+					index: 2,
 					selectedIconPath: "static/tabBar/mineed" + theme + ".png"
 				})
 				uni.setTabBarStyle({
