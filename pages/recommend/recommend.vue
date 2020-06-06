@@ -149,11 +149,6 @@
 			} catch (e) {
 				// error
 			}
-			//修改评论数目
-			let j=0;
-			for(;j<this.news_list.list.length;j=j+1){
-				this.modifyCommentCount(j);
-			}
 		},
 		//监听点击搜索栏
 		onNavigationBarSearchInputClicked() {
@@ -170,14 +165,14 @@
 					mask: false
 				}),
 				uni.request({
-					url:"https://af1o32.toutiao15.com/get_recommendation/?user_id="+this.user_id,
+					url:"https://af1o32.toutiao15.com/get_recommendation",
 					method:"POST",
+					data:{
+						user_id: this.user_id
+					},
 					success: (res) => {
+						console.log(res.data.news_list.length);
 						this.news_list.list=res.data.news_list;
-						let j=0;
-						for (; j < this.news_list.list.length; j = j + 1) {
-							this.modifyCommentCount(j)
-						}
 						uni.hideLoading();
 					}
 				});
@@ -189,26 +184,16 @@
 				if (item.loadmore !== '上拉加载更多') return;
 				item.loadmore = "加载中";
 				uni.request({
-					url:"https://af1o32.toutiao15.com/get_recommendation/?user_id="+this.user_id,
+					url:"https://af1o32.toutiao15.com/get_recommendation",
 					method:"POST",
+					data:{
+						user_id: this.user_id
+					},
 					success: (res) => {
 						this.news_list.list=res.data.news_list;
-						let j=0;
-						for (; j < this.news_list.list.length; j = j + 1) {
-							this.modifyCommentCount(j)
-						}
 						item.loadmore='上拉加载更多'
 					}
 				});
-			},
-			//修改第i个类别的第j个新闻的评论数目,此函数是为了解决同步请求问题，只有当所有的新闻id导入到数据库后才可以从数据库读取评论数目
-			modifyCommentCount(itemIndex){
-				uni.request({
-					url: 'https://af1o32.toutiao15.com/get_news_info?news_id=' + this.news_list.list[itemIndex].news_id,
-				}).then(data=>{
-					var [error, res] = data;
-					this.news_list.list[itemIndex].comment_count = res.data.comment_count
-				})
 			},
 
 			getData(){
@@ -219,16 +204,16 @@
 						mask: false
 					}),
 					uni.request({
-						url:"https://af1o32.toutiao15.com/get_recommendation/?user_id="+this.user_id,
+						url:"https://af1o32.toutiao15.com/get_recommendation",
 						method:"POST",
+						data:{
+							user_id: this.user_id
+						},
 						success: (res) => {
 							this.news_list.list=res.data.news_list;
 							uni.hideLoading();
-							console.log(this.news_list.list[3])
-							let j=0;
-							for (; j < this.news_list.list.length; j = j + 1) {
-								this.modifyCommentCount(j)
-							}
+							console.log(this.news_list.list[3]);
+							console.log(res.data.news_list.length);
 						},
 					});
 					this.news_list.firstLoad = true;

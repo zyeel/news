@@ -3,7 +3,7 @@
 		<view class="p-2 animated fast fadeIn">
 			<!-- 标题 -->
 			<view class="my-1" style="line-height: 1.4;"
-			:class="fontSizeTitle">{{item.title}}</view>
+			:class="fontSizeTitle">{{item.title==null?item.news_name:item.title}}</view>
 			<!-- 图片 -->
 			<template v-if="item.has_video!=null">
 				<template v-if="item.has_video==false&&item.image_list.length==0"></template>
@@ -33,7 +33,7 @@
 				<template v-else>
 				<view class="mr-2" style="color: #999999;line-height: 1.3;" :class="fontSizeDetail">{{item.source}}</view>
 				</template>
-				<view class="mr-2" style="color: #999999;line-height: 1.3;" :class="fontSizeDetail">{{item.comment_count}}评论</view>
+				<view class="mr-2" style="color: #999999;line-height: 1.3;" :class="fontSizeDetail" v-if="item.tabIndex==null">{{item.comment_count}}评论</view>
 				<template v-if="item.datetime!=null">
 				<text style="color: #999999;line-height: 1.3;" :class="fontSizeDetail">{{item.datetime}}</text>	
 				</template>
@@ -96,6 +96,7 @@
 				}
 				//获取用户信息
 				const user_id = uni.getStorageSync('user_id');
+				console.log(tabIndex);
 				//若已登录，则记录浏览历史
 				if(tabIndex==null){//非推荐页
 					try{
@@ -107,6 +108,7 @@
 					}
 				}
 				else{
+					console.log("111");
 					uni.request({
 						url:'https://af1o32.toutiao15.com/read_recommendation',
 						method:"POST",
