@@ -1,6 +1,8 @@
 <template>
+	
 	<view>
-		<scroll-view scroll-y="true" :style="'height:'+scrollH+'px;'" @scrolltolower="loadmore()" @scrolltoupper="refresh()">
+		<uni-icons v-if="this.flag" :style="topc" type="arrowthinup" size="30" @tap="top()"></uni-icons>
+		<scroll-view scroll-y="true" :style="'height:2000rpx;'" :scroll-top="scrollTop" @scrolltolower="loadmore()" @scrolltoupper="refresh()" @scroll='scroll'>
 			<template v-if="news_list.list.length>0">
 				<block v-for="(item2,index2) in news_list.list" :key="index2">
 					<common-list :item="item2" :index="index2" :fontSize="fontSize"></common-list>
@@ -15,17 +17,23 @@
 	</view>
 </template>
 
+
+
 <script>
 	import commonList from '@/components/custom/common-list/common-list.vue'
 	import divider from '@/components/custom/divider/divider.vue'
 	import noThing from '@/components/custom/no-thing/no-thing.vue'
 	import loadMore from '@/components/custom/load-more/load-more.vue'
+	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	import uniFab from '@/components/uni-fab/uni-fab.vue'
 	export default {
 		components: {
 			commonList,
 			divider,
 			noThing,
-			loadMore
+			loadMore,
+			uniIcons,
+			uniFab
 		},
 		computed: {
 			skin() {
@@ -48,6 +56,11 @@
 				scrollInto: "",
 				//用户id
 				user_id:"",
+				//回到顶部
+				flag:false,
+				scrollTop:-1,
+				old:{scrollTop:0},
+				topc:"position: fixed;z-index:99;right:20px; bottom:100px;",
 				news_list: []
 			}
 		},
@@ -93,7 +106,7 @@
 				}
 			})
 			var arr = {
-				loadmore: "上拉加载更多",
+				loadmore: "已经到底了",
 				list: [],
 				firstLoad: false
 			}
@@ -151,6 +164,7 @@
 				// error
 			}
 		},
+
 		//监听点击搜索栏
 		onNavigationBarSearchInputClicked() {
 			uni.navigateTo({
@@ -158,6 +172,23 @@
 			})
 		},
 		methods: {
+			scroll(e){
+				this.scrollTop=e.detail.scrollTop;
+				if(e.detail.scrollTop>50){
+					this.flag=true;
+				}else{
+					this.flag=false;
+				}
+			},
+			//回到顶部
+			top(){
+				console.log("top")
+				this.scrollTop = this.old.scrollTop
+                this.$nextTick(function(){
+                    this.scrollTop=0;
+                });
+				this.scrollTop=-1;
+			},
 			//下拉刷新时重新获取数据
 			refresh() {
 				console.log("refresh")
@@ -165,37 +196,60 @@
 					title: "加载中...",
 					mask: false
 				}),
+				console.log(this.user_id)
 				uni.request({
-					url:"https://af1o32.toutiao15.com/get_recommendation",
+					url:"https://af1o32.toutiao15.com/create_preflist",
 					method:"POST",
 					data:{
 						user_id: this.user_id
 					},
 					success: (res) => {
-						console.log(res.data.news_list.length);
-						this.news_list.list=res.data.news_list;
-						uni.hideLoading();
+						console.log(1)
+						uni.request({
+							url:"https://af1o32.toutiao15.com/create_recommendation",
+							method:"POST",
+							data:{
+								user_id: this.user_id
+							},
+							success: (res) => {
+								console.log(2)
+								uni.request({
+									url:"https://af1o32.toutiao15.com/get_recommendation",
+									method:"POST",
+									data:{
+										user_id: this.user_id
+									},
+									success: (res) => {
+										this.news_list.list=res.data.news_list;
+										console.log(3)
+										uni.hideLoading();
+									}
+								});
+							}
+						});
 					}
 				});
+
+				
 			},
 			//上拉加载更多
-			loadmore(){
-				console.log("loadmore")
-				let item = this.news_list;
-				if (item.loadmore !== '上拉加载更多') return;
-				item.loadmore = "加载中";
-				uni.request({
-					url:"https://af1o32.toutiao15.com/get_recommendation",
-					method:"POST",
-					data:{
-						user_id: this.user_id
-					},
-					success: (res) => {
-						this.news_list.list=res.data.news_list;
-						item.loadmore='上拉加载更多'
-					}
-				});
-			},
+			// loadmore(){
+			// 	console.log("loadmore")
+			// 	let item = this.news_list;
+			// 	if (item.loadmore !== '已经到底了') return;
+			// 	item.loadmore = "加载中";
+			// 	uni.request({
+			// 		url:"https://af1o32.toutiao15.com/get_recommendation",
+			// 		method:"POST",
+			// 		data:{
+			// 			user_id: this.user_id
+			// 		},
+			// 		success: (res) => {
+			// 			this.news_list.list=res.data.news_list;
+			// 			item.loadmore='上拉加载更多'
+			// 		}
+			// 	});
+			// },
 
 			getData(){
 				console.log("getData")
@@ -212,9 +266,9 @@
 						},
 						success: (res) => {
 							this.news_list.list=res.data.news_list;
+							console.log(this.news_list.list.length)
 							uni.hideLoading();
-							console.log(this.news_list.list[3]);
-							console.log(res.data.news_list.length);
+
 						},
 					});
 					this.news_list.firstLoad = true;

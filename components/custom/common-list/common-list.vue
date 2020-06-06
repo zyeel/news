@@ -108,7 +108,7 @@
 					}
 				}
 				else{
-					console.log("111");
+					console.log(news_id,user_id);
 					uni.request({
 						url:'https://af1o32.toutiao15.com/read_recommendation',
 						method:"POST",
