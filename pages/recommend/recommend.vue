@@ -176,11 +176,7 @@
 					success: (res) => {
 						this.news_list.list=res.data.news_list;
 						let j=0;
-						for(;j<5;j=j+1){
-							this.getInfo(j,res);
-						}
-						j=0;
-						for (; j < 5; j = j + 1) {
+						for (; j < this.news_list.list.length; j = j + 1) {
 							this.modifyCommentCount(j)
 						}
 						uni.hideLoading();
@@ -199,11 +195,7 @@
 					success: (res) => {
 						this.news_list.list=res.data.news_list;
 						let j=0;
-						for(;j<5;j=j+1){
-							this.getInfo(j,res);
-						}
-						j=0;
-						for (; j < 5; j = j + 1) {
+						for (; j < this.news_list.list.length; j = j + 1) {
 							this.modifyCommentCount(j)
 						}
 						item.loadmore='上拉加载更多'
@@ -219,22 +211,7 @@
 					this.news_list.list[itemIndex].comment_count = res.data.comment_count
 				})
 			},
-			getInfo(j,res){
-				console.log("getInfo");
-				uni.request({
-					url:'https://m.toutiao.com/i' + res.data.news_list[j].news_id + '/info/?_signature=mvD7gBATx-10tqTLvd1hNJrw-5&i=' + res.data.news_list[j].news_id,
-					method:"GET",
-					success: (result) => {
-						console.log(j)
-						this.news_list.list[j].title=result.data.data.title;
-						this.news_list.list[j].has_video=false;
-						this.news_list.list[j].image_list=[];
-						this.news_list.list[j].media_name=result.source;
-						this.news_list.list[j].datetime=result.publish_time;
-						this.news_list.list[j].comment_count=-1;
-					}
-				})
-			},
+
 			getData(){
 				console.log("getData")
 				if(this.news_list.firstLoad==false){
@@ -248,14 +225,9 @@
 						success: (res) => {
 							this.news_list.list=res.data.news_list;
 							uni.hideLoading();
-							console.log(this.news_list.list)
+							console.log(this.news_list.list[3])
 							let j=0;
-							for(;j<5;j=j+1){
-								this.news_list.list[j].item_id=this.news_list.list[j].news_id;
-								this.getInfo(j,res);
-							}
-							j=0;
-							for (; j < 5; j = j + 1) {
+							for (; j < this.news_list.list.length; j = j + 1) {
 								this.modifyCommentCount(j)
 							}
 						},
