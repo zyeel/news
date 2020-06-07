@@ -1,12 +1,8 @@
 <template>
 	
 	<view>
-<<<<<<< HEAD
 		<uni-icons v-if="this.flag" :style="topc" type="arrowthinup" size="30" @tap="top()"></uni-icons>
-		<scroll-view scroll-y="true" :style="'height:2000rpx;'" :scroll-top="scrollTop" @scrolltolower="loadmore()" @scrolltoupper="refresh()" @scroll='scroll'>
-=======
-		<scroll-view scroll-y="true" :style="'height:'+scrollH+'px;'+ skin" @scrolltolower="loadmore()" @scrolltoupper="refresh()" >
->>>>>>> 0402052c86da29e37c9c03467969f7108ea6a880
+		<scroll-view scroll-y="true" :style="'height:2000rpx;'+skin" :scroll-top="scrollTop" @scrolltolower="loadmore()" @scrolltoupper="refresh()" @scroll='scroll'>
 			<template v-if="news_list.list.length>0">
 				<block v-for="(item2,index2) in news_list.list" :key="index2">
 					<common-list :item="item2" :index="index2" :fontSize="fontSize"></common-list>
