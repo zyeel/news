@@ -52,6 +52,7 @@
 				text="注 册"
 				:rotate="isRotate" 
 				@click.native="startReg()"
+				:theme="theme_index"
 			></wButton>
 			
 			<!-- 底部信息 -->
@@ -88,6 +89,8 @@
 				isExist: false	,//账号是否存在
 				isMatch: '',	//验证码是否正确
 				skinMode: true,	//夜间模式
+				theme_color: ["#ED4040", "#ffcc00", "#74b886", "#395ac6", "#ffbdbd", "#424242"],
+				theme_index: 0
 			}
 		},
 		components:{
@@ -107,6 +110,20 @@
 			}catch(e){
 				//TODO handle the exception
 				//_this.skinMode = true;
+			}
+			//加载主题颜色
+			try {
+				var theme = uni.getStorageSync('theme_color');
+				if (theme == '') {
+					theme = 0;
+				}
+				this.theme_index = theme;
+				uni.setNavigationBarColor({
+					frontColor: "#ffffff",
+					backgroundColor: this.theme_color[theme]
+				})
+			} catch (e) {
+				// error
 			}
 		},
 		methods: {

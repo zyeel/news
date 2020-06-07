@@ -26,6 +26,7 @@
 				:rotate="isRotate" 
 				@click.native="startLogin()"
 				class="wbutton"
+				:theme="theme_index"
 			></wButton>
 			
 			<!-- 其他登录 
@@ -69,6 +70,8 @@
 				isExist: false,	//账号是否存在
 				isLogin: false,	//账号是否在别的设备上被登录
 				skinMode: true,	//夜间模式
+				theme_color: ["#ED4040", "#ffcc00", "#74b886", "#395ac6", "#ffbdbd", "#424242"],
+				theme_index: 0
 			};
 		},
 		components:{
@@ -89,6 +92,20 @@
 			}catch(e){
 				//TODO handle the exception
 				//_this.skinMode = true;
+			}
+			//加载主题颜色
+			try {
+				var theme = uni.getStorageSync('theme_color');
+				if (theme == '') {
+					theme = 0;
+				}
+				this.theme_index = theme;
+				uni.setNavigationBarColor({
+					frontColor: "#ffffff",
+					backgroundColor: this.theme_color[theme]
+				})
+			} catch (e) {
+				// error
 			}
 		},
 		methods: {

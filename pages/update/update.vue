@@ -98,7 +98,9 @@
 			}
 			try{
 				const value = uni.getStorageSync('skin_mode');
-				this.skinMode = value;
+				if(value!==''){
+					this.skinMode = value;
+				}
 			}catch(e){
 				//TODO handle the exception
 			}
