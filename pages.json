@@ -180,15 +180,27 @@
 		}
         ,{
             "path" : "pages/login/login",
-            "style" : {}
+            "style" : {
+				"titleNView":{
+					"titleColor":"#FFFFFF"
+				}
+			}
         }
         ,{
             "path" : "pages/login/register",
-            "style" : {}
+            "style" : {
+				"titleNView":{
+					"titleColor":"#FFFFFF"
+				}
+			}
         }
         ,{
             "path" : "pages/login/forget",
-            "style" : {}
+            "style" : {
+				"titleNView":{
+					"titleColor":"#FFFFFF"
+				}
+			}
         }
         ,{
             "path" : "pages/config/config",
