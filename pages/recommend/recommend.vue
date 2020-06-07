@@ -203,6 +203,7 @@
 						user_id: this.user_id
 					},
 					success: (res) => {
+						//console.log(res.data.news_list.length);
 						console.log(1)
 						uni.request({
 							url:"https://af1o32.toutiao15.com/create_recommendation",

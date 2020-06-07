@@ -4,7 +4,7 @@
 			<view class="bgColor" :style="skinMode?'':'background-color: rgba(0,0,0,0.2)'"></view>
 			<!-- 头部logo -->
 			<view class="header">
-				<image :src="logoImage"></image>
+				<image src="../../static/app.png"></image>
 			</view>
 			<!-- 主体表单 -->
 			<view class="main">
