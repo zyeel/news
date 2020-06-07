@@ -269,7 +269,7 @@
 		onNavigationBarButtonTap(e) {
 			if (e.index == 0) {
 				console.log('111');
-				this.Share();
+				this.openShare();
 			}
 			if (e.index == 1) {}
 		},
