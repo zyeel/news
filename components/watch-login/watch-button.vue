@@ -14,15 +14,41 @@
 	export default{
 		props:{
 			text: String, //显示文本
+			theme : Number,
 			rotate:{
 				//是否启动加载
 				type: [Boolean,String],
 				default: false,
 			}, 
-			bgColor:{
+			bgColor0:{
 				//按钮背景颜色
 				type: String,
-				default: "linear-gradient(to right, rgba(254,0,0,0.7), rgba(254,0,0,0.6))",
+				default: "linear-gradient(to right, rgba(237,64,64,0.9), rgba(237,64,64,0.7))",
+			},
+			bgColor1:{
+				//按钮背景颜色
+				type: String,
+				default: "linear-gradient(to right, rgba(255,204,0,0.9), rgba(255,204,0,0.7))",
+			},
+			bgColor2:{
+				//按钮背景颜色
+				type: String,
+				default: "linear-gradient(to right, rgba(116,184,134,0.9), rgba(116,184,134,0.7))",
+			},
+			bgColor3:{
+				//按钮背景颜色
+				type: String,
+				default: "linear-gradient(to right, rgba(57,90,198,0.9), rgba(57,90,198,0.7))",
+			},
+			bgColor4:{
+				//按钮背景颜色
+				type: String,
+				default: "linear-gradient(to right, rgba(255,189,189,0.9), rgba(255,189,189,0.7))",
+			},
+			bgColor5:{
+				//按钮背景颜色
+				type: String,
+				default: "linear-gradient(to right, rgba(66,66,66,0.9), rgba(66,66,66,0.7))",
 			},
 			fontColor:{
 				//按钮字体颜色
@@ -35,6 +61,9 @@
 				//处理值
 				return String(this.rotate) !== 'false'
 			},
+			bgColor(){
+				return this.$props['bgColor'+this.theme];
+			}
 		}
 	}
 </script>

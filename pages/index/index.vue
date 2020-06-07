@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<uni-icons v-if="this.flag" :style="topc" type="arrowthinup" size="30" @tap="top()"></uni-icons>
 		<!-- 顶部选项卡 -->
 		<scroll-view scroll-x class="scroll-row border-bottom" :scroll-into-view="scrollInto" scroll-with-animation="" style="height: 100rpx;"
 		 :style="skinMode?'background-color: #F5F7F9;':'background-color: rgba(0,0,0,0.3)'">
@@ -9,7 +10,7 @@
 		<!-- 内容块滑动 -->
 		<swiper :duration="150" :current="tabIndex" @change="onChangeTab" :style="'height:'+scrollH+'px;'+skin">
 			<swiper-item v-for="(item1,index1) in tabBars" :key="index1">
-				<scroll-view scroll-y="true" :style="'height:'+scrollH+'px;'" @scrolltolower="loadmore(index1)" @scrolltoupper="refresh(index1)">
+				<scroll-view scroll-y="true" :style="'height:2000rpx;'" :scroll-top="scrollTop" @scrolltolower="loadmore(index1)" @scrolltoupper="refresh(index1)" @scroll='scroll'>
 					<template v-if="news_list[index1].list.length>0">
 						<block v-for="(item2,index2) in news_list[index1].list" :key="index2">
 							<common-list :item="item2" :index="index2" :fontSize="fontSize"></common-list>
@@ -123,6 +124,11 @@
 					name: "美食",
 					type: "news_food"
 				}],
+				//回到顶部
+				flag:false,
+				scrollTop:-1,
+				old:{scrollTop:0},
+				topc:"position: fixed;z-index:99;right:20px; bottom:100px;",
 				news_list: []
 			}
 		},
@@ -269,6 +275,23 @@
 			})
 		},
 		methods: {
+			scroll(e){
+				this.scrollTop=e.detail.scrollTop;
+				if(e.detail.scrollTop>50){
+					this.flag=true;
+				}else{
+					this.flag=false;
+				}
+			},
+			//回到顶部
+			top(){
+				console.log("top")
+				this.scrollTop = this.old.scrollTop
+                this.$nextTick(function(){
+                    this.scrollTop=0;
+                });
+				this.scrollTop=-1;
+			},			
 			//切换上方的状态栏时记录当前状态栏索引
 			onChangeTab(e) {
 				this.changeTab(e.detail.current);
