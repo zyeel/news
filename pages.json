@@ -135,18 +135,8 @@
 									"float": "right"
 								}
 							]
-					},
-					"subNVues":[{
-						"id": "share_page",
-						"path":"pages/info/subNVue/share",
-						"type":"popup",
-						"style":{
-							//"position":"absolute",
-							"bottom":"0",
-							"width":"750rpx",
-							"height":"250rpx"
-						}
-					}]
+					}
+					
 				}	
 			}
 		}

@@ -171,7 +171,7 @@
 						user_id: this.user_id
 					},
 					success: (res) => {
-						console.log(res.data.news_list.length);
+						//console.log(res.data.news_list.length);
 						this.news_list.list=res.data.news_list;
 						uni.hideLoading();
 					}
