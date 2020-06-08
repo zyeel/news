@@ -56,9 +56,12 @@
 		</view>
 		
 		<!-- 分享弹窗 -->
-		<uni-popup ref="popup" type="bottom">
-			<uni-popup-share title="分享到" @select="select"></uni-popup-share>
-		</uni-popup>
+		<view :style="skinMode?'':'background-color: #b9b9b9'">
+			<uni-popup ref="popup" type="bottom">
+				<uni-popup-share :skinMode=skinMode :title="分享到" @select="select"></uni-popup-share>
+			</uni-popup>
+		</view>
+		
 	</view>
 </template>
 
