@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-popup-share">
+	<view class="uni-popup-share" :style="skinMode?'':'background-color: #b9b9b9'">
 		<view class="uni-share-title"><text class="uni-share-title-text">{{title}}</text></view>
 		<view class="uni-share-content">
 			<view class="uni-share-content-box">
@@ -11,7 +11,7 @@
 			</view>
 		</view>
 		<view class="uni-share-button-box">
-			<button class="uni-share-button" @click="close">取消</button>
+			<button class="uni-share-button":style="skinMode?'':'background-color: #cfcfcf'" @click="close">取消</button>
 		</view>
 	</view>
 </template>
@@ -23,6 +23,10 @@
 			title: {
 				type: String,
 				default: '分享到'
+			},
+			skinMode:{
+				type: Boolean,
+				default: true
 			}
 		},
 		inject: ['popup'],
