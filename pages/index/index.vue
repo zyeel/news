@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<uni-icons v-if="this.flag" :style="topc" type="arrowthinup" size="30" @tap="top()"></uni-icons>
 		<!-- 顶部选项卡 -->
 		<scroll-view scroll-x class="scroll-row border-bottom" :scroll-into-view="scrollInto" scroll-with-animation="" style="height: 100rpx;"
 		 :style="skinMode?'background-color: #F5F7F9;':'background-color: rgba(0,0,0,0.3)'">
@@ -9,7 +10,7 @@
 		<!-- 内容块滑动 -->
 		<swiper :duration="150" :current="tabIndex" @change="onChangeTab" :style="'height:'+scrollH+'px;'+skin">
 			<swiper-item v-for="(item1,index1) in tabBars" :key="index1">
-				<scroll-view scroll-y="true" :style="'height:'+scrollH+'px;'" @scrolltolower="loadmore(index1)" @scrolltoupper="refresh(index1)">
+				<scroll-view scroll-y="true" :style="'height:2000rpx;'" :scroll-top="scrollTop" @scrolltolower="loadmore(index1)" @scrolltoupper="refresh(index1)" @scroll='scroll'>
 					<template v-if="news_list[index1].list.length>0">
 						<block v-for="(item2,index2) in news_list[index1].list" :key="index2">
 							<common-list :item="item2" :index="index2" :fontSize="fontSize"></common-list>
@@ -50,6 +51,8 @@
 		},
 		data() {
 			return {
+				//用户id
+				userID: '',
 				//夜间模式
 				skinMode: true,
 				//字体大小
@@ -62,7 +65,8 @@
 				//当前选项卡
 				tabIndex: 0,
 				//顶部选项卡
-				tabBars: [{
+				tabBars: [
+					{
 					name: "热点",
 					type: "news_hot"
 				}, {
@@ -120,6 +124,11 @@
 					name: "美食",
 					type: "news_food"
 				}],
+				//回到顶部
+				flag:false,
+				scrollTop:-1,
+				old:{scrollTop:0},
+				topc:"position: fixed;z-index:99;right:20px; bottom:100px;",
 				news_list: []
 			}
 		},
@@ -133,18 +142,46 @@
 			} catch (e) {
 				// error
 			}
+			//加载userID
+			try{
+				const value = uni.getStorageSync("user_id");
+				if(value !== ''){
+					this.userID = value;
+				}
+			}catch(e){
+				//TODO handle the exception
+			}
+			if(this.userID !== ''){
+				//更新用户最喜爱的词语表
+				uni.request({
+					url: "https://af1o32.toutiao15.com/create_preflist",
+					data:{
+						user_id: this.userID,
+					},
+					method:"POST",
+					success() {
+					}
+				})
+				//更新推荐新闻
+				uni.request({
+					url:"https://af1o32.toutiao15.com/create_recommendation",
+					data:{
+						user_id: this.userID,
+					},
+					method:"POST",
+				})
+			}
+			
 			//修改底部tab
 			if (this.skinMode) {
 				uni.setTabBarStyle({
 					color: '#333333',
-					selectedColor: '#ED4040',
 					backgroundColor: '#F5F3F4',
 					borderStyle: 'back'
 				})
 			} else {
 				uni.setTabBarStyle({
 					color: '#333333',
-					selectedColor: '#ED4040',
 					backgroundColor: 'rgba(0,0,0,0.3)',
 					borderStyle: 'back'
 				})
@@ -164,6 +201,7 @@
 				})
 			}
 			this.news_list = arr
+			console.log(this.news_list[0].list)
 			//保存当前的tabIndex值
 			try {
 				uni.setStorageSync('tabIndex', this.tabBars[this.tabIndex].name);
@@ -171,6 +209,7 @@
 				//TODO handle the exception
 			};
 			this.getData();
+			console.log(this.news_list[0].list)
 		},
 		onShow() {
 			console.log("index show")
@@ -210,6 +249,10 @@
 				})
 				uni.setTabBarItem({
 					index: 1,
+					selectedIconPath: "static/tabBar/rcmded" + theme + ".png"
+				})
+				uni.setTabBarItem({
+					index: 2,
 					selectedIconPath: "static/tabBar/mineed" + theme + ".png"
 				})
 				uni.setTabBarStyle({
@@ -232,6 +275,23 @@
 			})
 		},
 		methods: {
+			scroll(e){
+				this.scrollTop=e.detail.scrollTop;
+				if(e.detail.scrollTop>50){
+					this.flag=true;
+				}else{
+					this.flag=false;
+				}
+			},
+			//回到顶部
+			top(){
+				console.log("top")
+				this.scrollTop = this.old.scrollTop
+                this.$nextTick(function(){
+                    this.scrollTop=0;
+                });
+				this.scrollTop=-1;
+			},			
 			//切换上方的状态栏时记录当前状态栏索引
 			onChangeTab(e) {
 				this.changeTab(e.detail.current);
@@ -256,7 +316,7 @@
 							//console.log("loadmore",'https://af1o32.toutiao15.com/import_newsId?news_id='+result.data.data[j].item_id)
 							uni.request({
 									url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-										result.data.data[j].title
+										result.data.data[j].title + "&tabIndex="+this.tabBars[i].name + "&publish_time="+result.data.data[j].publish_time+"&source="+result.data.data[j].source
 								})
 								.then(data => {
 									var [error, res] = data;
@@ -289,7 +349,7 @@
 							//console.log("loadmore",'https://af1o32.toutiao15.com/import_newsId?news_id='+result.data.data[j].item_id)
 							uni.request({
 									url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-										result.data.data[j].title
+										result.data.data[j].title+ "&tabIndex="+this.tabBars[index].name + "&publish_time="+result.data.data[j].publish_time+"&source="+result.data.data[j].source
 								})
 								.then(data => {
 									var [error, res] = data;
@@ -352,8 +412,7 @@
 							let j = 0;
 							for (; j < this.news_list[i].list.length; j = j + 1) {
 								uni.request({
-										url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" +
-											result.data.data[j].title
+										url: 'https://af1o32.toutiao15.com/import_news?news_id=' + result.data.data[j].item_id + "&news_name=" + result.data.data[j].title+ "&tabIndex="+this.tabBars[i].name + "&publish_time="+result.data.data[j].publish_time+"&source="+result.data.data[j].source
 									})
 									.then(data => {})
 							}

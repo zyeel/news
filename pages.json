@@ -30,9 +30,31 @@
 			}
 		},
 		{
-			"path": "pages/hot/hot",
+			"path": "pages/recommend/recommend",
 			"style": {
-				
+				"app-plus":{
+					//导航栏
+					"titleNView":{
+						"searchInput":{
+							"align":"center",
+							"backgroundColor":"#F5F4F2",
+							"borderRadius":"15px",
+							"disabled":true,
+							"placeholder":"新闻搜索",
+							"placeholderColor":"#6d6c67"
+						},
+						"buttons":[
+							{
+								"color":"#ffffff",
+								"colorPressed":"#ffffff",
+								"float":"right",
+								"fontSize":"16px",
+								"fontSrc":"/static/iconfont2.ttf",
+								"text":"\ue621"
+							}
+						]
+					}
+				}
 			}
 		},
 		{
@@ -113,18 +135,8 @@
 									"float": "right"
 								}
 							]
-					},
-					"subNVues":[{
-						"id": "share_page",
-						"path":"pages/info/subNVue/share",
-						"type":"popup",
-						"style":{
-							//"position":"absolute",
-							"bottom":"0",
-							"width":"750rpx",
-							"height":"250rpx"
-						}
-					}]
+					}
+					
 				}	
 			}
 		}
@@ -158,15 +170,27 @@
 		}
         ,{
             "path" : "pages/login/login",
-            "style" : {}
+            "style" : {
+				"titleNView":{
+					"titleColor":"#FFFFFF"
+				}
+			}
         }
         ,{
             "path" : "pages/login/register",
-            "style" : {}
+            "style" : {
+				"titleNView":{
+					"titleColor":"#FFFFFF"
+				}
+			}
         }
         ,{
             "path" : "pages/login/forget",
-            "style" : {}
+            "style" : {
+				"titleNView":{
+					"titleColor":"#FFFFFF"
+				}
+			}
         }
         ,{
             "path" : "pages/config/config",
@@ -231,7 +255,7 @@
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "今日头条",
+		"navigationBarTitleText": "明日头条",
 		"navigationBarBackgroundColor": "#ED4040",
 		"backgroundColor": "#FFFFFF"
 	},
@@ -245,6 +269,12 @@
 			"text":"首页",
 			"iconPath":"static/tabBar/home.png",
 			"selectedIconPath":"static/tabBar/homeed0.png"
+		},
+		{
+			"pagePath":"pages/recommend/recommend",
+			"text":"推荐",
+			"iconPath":"static/tabBar/rcmd.png",
+			"selectedIconPath":"static/tabBar/rcmded0.png"
 		},
 		{
 			"pagePath":"pages/mine/mine",

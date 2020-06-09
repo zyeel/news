@@ -6,10 +6,10 @@
 			<view class="author">{{author}}</view>
 			<view class="time">{{time | tsToTime}}</view>
 		</view>
-		<view class="content" :class="fontSizeContent">
+		<view class="content">
 			<video class="video_s" v-if="has_video" :src="video_source" :poster="video_poster"></video>
 			<!--<rich-text :nodes="news_content"></rich-text>-->
-			<u-prase :content="news_content"></u-prase>
+			<u-prase :content="news_content" ></u-prase>
 		</view>
 
 		<!-- 部分评论 -->
@@ -38,7 +38,6 @@
 				<view class="more_comments" @click="to_comment">查看更多评论</view>
 			</view>
 		</view>
-
 		<!-- 底部评论栏 -->
 		<view class="comment_bar" :style="skinMode?'':'background-color: #b9b9b9; border-top: 1rpx solid #b5b5b5'">
 			<!-- 输入框 -->
@@ -53,8 +52,16 @@
 			 class="comment_bar_img" @click="click_collection"></image>
 			<!-- 点赞数角标 -->
 			<text :class="['digg_count',isDigg==1?'change_color':'']">{{digg_count_display}}</text>
-			<image src="../../static/comment_bar/share.png" mode="aspectFit" class="comment_bar_img" @click="Share()"></image>
+			<image src="../../static/comment_bar/share.png" mode="aspectFit" class="comment_bar_img" @click="openShare"></image>
 		</view>
+		
+		<!-- 分享弹窗 -->
+		<view :style="skinMode?'':'background-color: #b9b9b9'">
+			<uni-popup ref="popup" type="bottom">
+				<uni-popup-share :skinMode=skinMode :title="分享到" @select="select"></uni-popup-share>
+			</uni-popup>
+		</view>
+		
 	</view>
 </template>
 
@@ -63,10 +70,13 @@
 		timestampToTime
 	} from '../../timeset.js';
 	import uPrase from "../../components/feng-parse/parse.vue"
-	
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import uniPopupShare from '../../components/uni-popup/uni-popup-share.vue'
 	export default {
 		components:{
-			uPrase
+			uPrase,
+			uniPopup,
+			uniPopupShare
 			},
 		data() {
 			return {
@@ -92,7 +102,7 @@
 				video_id:'',
 				video_source: '',
 				video_poster:'',
-				has_video: false
+				has_video: false,
 			}
 		},
 		onLoad(e) {
@@ -121,7 +131,7 @@
 					//console.log(this.author);
 					this.time = res.data.data.publish_time;
 					this.news_content = res.data.data.content.replace(/<img/gi, '<img style="max-width: 100%;"').replace(
-						/<html><body>/gi, '').replace(/<\/body><\/html>/gi, "").replace(/<p>/gi, '<p style="margin:16px 0">');
+						/<html><body>/gi, '').replace(/<\/body><\/html>/gi, "").replace(/<p>/gi, '<p style="margin:16px 0;font-size:'+((this.fontSize == 'big') ? '40rpx' : ((this.fontSize == 'normal') ? '35rpx' : '30rpx'))+';">');
 					
 					if(this.news_content.search(/tt-videoid/) != -1){
 						//获取视频
@@ -135,7 +145,11 @@
 					}
 					this.con = res.data.data.content.replace(/<[a-zA-Z][^>]*>/gi, '').replace(/[</][a-zA-Z][^>]*>/gi, '').replace(
 						/</gi, '');
-					this.con = this.con.substr(0, 50);
+					this.con = this.con.replace(/\\[a-zA-Z]/gi, '');
+					this.con = this.con.replace(/[\n]+/gi, '');
+					this.con = this.con.substr(0, 50);if(this.con.length<50){
+						this.con = this.con.concat("...");
+					}
 					//this.comment_count = res.data.data.comment_count;
 					uni.setNavigationBarTitle({
 						title: this.author
@@ -258,7 +272,7 @@
 		onNavigationBarButtonTap(e) {
 			if (e.index == 0) {
 				console.log('111');
-				this.Share();
+				this.openShare();
 			}
 			if (e.index == 1) {}
 		},
@@ -291,6 +305,81 @@
 			}
 		},
 		methods: {
+			select: function(item, index){
+				if(item.index == 0){
+					uni.share({
+						provider: "weixin",
+						scene: "WXSceneSession",
+						type: 0,
+						href: this.link,
+						title: JSON.stringify(this.title),
+						summary: JSON.stringify(this.con),
+						imageUrl: 'static/app.png',
+						success: function(res){
+							console.log("success: "+ JSON.stringify(res));
+						},
+						fail: function(err){
+							console.log("fail: "+JSON.stringify(JSON.stringify(err)));
+						}
+					})
+				}
+				else if(item.index==1){
+					uni.share({
+						provider: "qq",
+						type: 1,
+						href: this.link,
+						title: JSON.stringify(this.title),
+						summary: JSON.stringify(this.con),
+						//imageUrl: 'static/collection.png',
+						success: function(res){
+							console.log("success: "+ JSON.stringify(res));
+						},
+						fail: function(err){
+							console.log("fail: "+JSON.stringify(JSON.stringify(err)));
+						}
+					})
+				}
+				else if(item.index==2){
+					uni.share({
+						provider: "sinaweibo",
+						type: 0,
+						href: this.link,
+						title: JSON.stringify(this.title),
+						summary: JSON.stringify(this.con),
+						imageUrl: 'static/app.png',
+						success: function(res){
+							console.log("success: "+ JSON.stringify(res));
+						},
+						fail: function(err){
+							console.log("fail: "+JSON.stringify(JSON.stringify(err)));
+						}
+					})
+				}
+				else if(item.index==3){
+					uni.share({
+						provider: "weixin",
+						scene: "WXSceneTimeline",
+						type: 0,
+						href: this.link,
+						title: JSON.stringify(this.title),
+						imageUrl: 'static/app.png',
+						success: function(res){
+							console.log("success: "+ JSON.stringify(res));
+						},
+						fail: function(err){
+							console.log("fail: "+JSON.stringify(JSON.stringify(err)));
+						}
+					})
+				}
+				//console.log(item.index);
+				//console.log(index);
+			},
+			openShare(){
+				this.$refs.popup.open()
+			},
+			close(){
+				this.$refs.popup.close()
+			},
 			click_comment: function() {
 				//滑动到评论处
 				uni.createSelectorQuery().select(".container").boundingClientRect(data => {
@@ -392,21 +481,6 @@
 				uni.navigateTo({
 					url: '../comment/comment?news_id=' + this.news_id + '&comment_count=' + this.comment_count
 				});
-			},
-			Share: function() {
-				//console.log(this.title);
-				let data = {
-					title: this.title,
-					content: this.con,
-					link: this.link
-				};
-				uni.$emit('shareMsg', data);
-
-				const subNVue = uni.getSubNVueById("share_page");
-				subNVue.show();
-			},
-			closeShare: function() {
-				console.log("111");
 			},
 			getVideo(id){
 				uni.request({

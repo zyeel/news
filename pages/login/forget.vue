@@ -38,6 +38,7 @@
 				text="重置密码"
 				:rotate="isRotate" 
 				@click.native="startRePass()"
+				:theme="theme_index"
 			></wButton>
 
 		</view>
@@ -58,6 +59,8 @@
 				isMatch: '',	//验证码是否正确
 				isExist: false,	//是否存在该账号
 				skinMode: true,	//夜间模式
+				theme_color: ["#ED4040", "#ffcc00", "#74b886", "#395ac6", "#ffbdbd", "#424242"],
+				theme_index: 0
 			}
 		},
 		components:{
@@ -77,6 +80,20 @@
 			}catch(e){
 				//TODO handle the exception
 				//_this.skinMode = true;
+			}
+			//加载主题颜色
+			try {
+				var theme = uni.getStorageSync('theme_color');
+				if (theme == '') {
+					theme = 0;
+				}
+				this.theme_index = theme;
+				uni.setNavigationBarColor({
+					frontColor: "#ffffff",
+					backgroundColor: this.theme_color[theme]
+				})
+			} catch (e) {
+				// error
 			}
 		},
 		methods: {
